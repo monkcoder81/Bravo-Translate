@@ -136,6 +136,7 @@ function BRAVOTRAN_delete(id) {
 </div> 
 
 <div id="BRAVOTRAN_table_container">
+ <!--begin of BRAVOTRANtablexss-->
     <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable">
     <tr>
         <td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td>
@@ -161,7 +162,9 @@ echo'<tr><td class="bravoCell" colspan="2">No transaltions so far</td></tr>';
     ?>
     
     </table>
+     <!--end of BRAVOTRANtablexss-->
     </div>
+   
     </div>
     <?php
 }    

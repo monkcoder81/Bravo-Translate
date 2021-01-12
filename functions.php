@@ -92,10 +92,15 @@ function isText($html,$string,$striped){
   }
 function BRAVOTRAN_Replace($html) {
   error_log('time1:'.microtime()."nii");
-  /*  $uriNoParams=$_SERVER['REQUEST_URI'];
+   $uriNoParams=$_SERVER['REQUEST_URI'];
     if(strpos($uriNoParams,"?")!=false) $uriNoParams=explode("?",$_SERVER['REQUEST_URI']);
     $uriNoParams=$uriNoParams[0];
-  if (($_SERVER['REQUEST_URI']=="/wp-admin/admin.php?page=bravo-translate")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_update")) return $html;*/
+  if (($_SERVER['REQUEST_URI']=="/wp-admin/admin.php?page=bravo-translate")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_update")){
+      $exceptionBravo=true;
+      $array_table1=explode('<!--begin of BRAVOTRANtablexss-->',$html);
+      $array_table2=explode('<!--end of BRAVOTRANtablexss-->',$array_table1[1]);
+      $intact=$array_table2[0];
+  }
     $sql="SELECT * FROM `wp_bravo_translate`";
     $striped=strip_tags($html);
     global $wpdb;
@@ -152,6 +157,11 @@ function BRAVOTRAN_Replace($html) {
 
     // modify uffer here, and then return the updated code
     error_log('time2:'.microtime()."noo");
+    if($exceptionBravo){
+      $array_table1=explode('<!--begin of BRAVOTRANtablexss-->',$html);
+      $array_table2=explode('<!--end of BRAVOTRANtablexss-->',$html);
+      $html=$array_table1[0].'<!--begin of BRAVOTRANtablexss-->'.$intact.'<!--end of BRAVOTRANtablexss-->'.$array_table2[1];
+    }
     return $prefix.$html;
 }
   
@@ -177,6 +187,7 @@ $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" cl
 <p>1 traducción añadida</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
 <span class="screen-reader-text">Descartar este aviso.</span></button>
 </div>
+<!--begin of BRAVOTRANtablexss-->
 <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
 if($wpdb->num_rows>0){
 foreach($results as $result){
@@ -184,7 +195,7 @@ foreach($results as $result){
    <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
 }
 }
-$response.="</table>";
+$response.="</table><!--end of BRAVOTRANtablexss-->";
 
 echo $response;
 }
@@ -202,6 +213,7 @@ function BRAVOTRAN_update(WP_REST_Request $request){
   <p>1 traducción editada</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
   <span class="screen-reader-text">Descartar este aviso.</span></button>
   </div>
+  <!--begin of BRAVOTRANtablexss-->
   <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
   if($wpdb->num_rows>0){
   foreach($results as $result){
@@ -209,7 +221,7 @@ function BRAVOTRAN_update(WP_REST_Request $request){
      <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
   }
   }
-  $response.="</table>";
+  $response.="</table><!--end of BRAVOTRANtablexss-->";
   
   echo $response;
   }
@@ -224,6 +236,7 @@ function BRAVOTRAN_update(WP_REST_Request $request){
     <p>1 traducción eliminada</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
     <span class="screen-reader-text">Descartar este aviso.</span></button>
     </div>
+    <!--begin of BRAVOTRANtablexss-->
     <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
     if($wpdb->num_rows>0){
     foreach($results as $result){
@@ -231,7 +244,7 @@ function BRAVOTRAN_update(WP_REST_Request $request){
        <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
     }
     }
-    $response.="</table>";
+    $response.="</table><!--end of BRAVOTRANtablexss-->";
     
     echo $response;
     }
