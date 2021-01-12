@@ -5,7 +5,7 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 $html='<div id="main-content">
 <div class="container">
-<div id="content-area" class="clearfix"> 
+<div id="content-area" class="clearfix"> <input type="text" placeholder="lo que a mi me de la gana">
     <div id="left-area">
                                     <article id="post-1" class="et_pb_post post-1 post type-post status-publish format-standard hentry category-sin-categoria">
                                     <div class="et_post_meta_wrapper">
@@ -30,6 +30,8 @@ function currada($string,$reemplazar,$html){
   
                 $etiqueta="";
                 $position="";
+                $atributo="";
+                $comillas=0;
                 //determinamos si es un valor de atributo value="
                 $len=$posicionHTML;
                 $char="";
@@ -40,6 +42,18 @@ function currada($string,$reemplazar,$html){
                     if($char==">") {
                         if($position=="") $position="entre";
                     
+                    }
+                    if($char=='"') {
+                        $comillas++;
+                        if($comillas==1) {
+                            if($html[$len-($e+1)]=="="){
+                                for($u=$e+2;$html[$len-$u]!=" ";$u++)
+                                    $atributo.=$html[$len-($u)];
+                                }
+                                $atributo=strrev($atributo);
+                               
+                            }
+                          
                     }
                     if($char=="<"){
                         if($position=="") $position="dentro";
@@ -52,6 +66,7 @@ function currada($string,$reemplazar,$html){
                         $cadeneta=substr($cadeneta,-$df);
                         $cadeneta=explode(" ",$cadeneta);
                         $cadeneta=$cadeneta[0];
+                        $etiqueta=$cadeneta;
                         //echo "position:".$position.",etiqueta:".$cadeneta."<br>";
                         //lets check if ocurrence of the string is inside a word
                         $prevChar=$html[$len];
@@ -59,6 +74,9 @@ function currada($string,$reemplazar,$html){
                         $insideWord=insideWord($prevChar,$nextChar);
                     
                         if(($etiqueta!="script")AND($etiqueta!="style") AND ($position=="entre")AND !$insideWord){
+                            $output=$output.$array[$i].$reemplazar;
+                        }
+                        else if(($position="dentro")AND($atributo=="placeholder")){
                             $output=$output.$array[$i].$reemplazar;
                         }
                         else{
@@ -78,11 +96,9 @@ function currada($string,$reemplazar,$html){
     //echo "<br>".$output;
     return $output;
   }
-echo currada("mundo","jili",$html);
+echo currada("lo que a mi me de la gana","jili",$html);
 
 function insideWord($prevChar,$nextChar){
-echo $prevChar."<br>";
-echo $nextChar."<br>";
 $prev=false;
 $next=false;
 $alphas = array_merge(range('A', 'Z'), range('a', 'z'));
