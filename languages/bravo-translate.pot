@@ -1,0 +1,72 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bravo Translate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-16 02:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.0; wp-5.6\n"
+"X-Domain: bravo-translate"
+
+#: functions.php:258
+msgid "1 translation deleted"
+msgstr ""
+
+#: admin.php:141
+msgid "Add Translation"
+msgstr ""
+
+#. Name of the plugin
+msgid "Bravo Translate"
+msgstr ""
+
+#: admin.php:165
+msgid "Delete"
+msgstr ""
+
+#: admin.php:165
+msgid "Edit"
+msgstr ""
+
+#: admin.php:142
+msgid "Edit Translation"
+msgstr ""
+
+#. Author of the plugin
+msgid "guelben"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.guelbetech.com"
+msgstr ""
+
+#: admin.php:169
+msgid "No translations so far."
+msgstr ""
+
+#: admin.php:126 admin.php:150
+msgid "Text to translate"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"The easiest solution for translate your monolingual website. Works with "
+"texts coming form your plugins, themes or database. Your translations will "
+"be preserved after any update."
+msgstr ""
+
+#: admin.php:39 admin.php:76
+msgid "The text to be translated must have a minimum length of 2 characters."
+msgstr ""
+
+#: admin.php:127 admin.php:151
+msgid "Your translation"
+msgstr ""

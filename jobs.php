@@ -1,18 +1,26 @@
 <?php
+
 //reglas si está entre una etiqueta que no es script ni style entonces reemplazar
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+require_once('../../../wp-load.php');
+echo BRAVOTRAN_DIR_URL;
+
+/*
+function allowedTagsBetween(){
+$tags="-a-abbr-address-article-aside-audio-b-blockquote-body-br-button-caption-cite-data-dt-dd-em-figcaption-footer-form-h1-h2-h3-h4-h5-h6-hr-html-i-img-input-del-ins-kbd-label-legend-li-main-mark-noscript-option-p-pre-q-s-samp-section-select-small-source-span-strong-sub-summary-sup-table-tbody-td-template-textarea-tfoot-th-time-thead-title-tr-u-ul-video-";    
+return $tags;
+}
 $html='<div id="main-content">
 <div class="container">
-<div id="content-area" class="clearfix"> <input type="text" placeholder="lo que a mi me de la gana">
-    <div id="left-area">
+<div id="content-area" class="clearfix"> <input type="text" value="mierdón" placeholder="lo que a mi me de la gana">
+    <div id="left-area">  <br>    esto es una    </br>
                                     <article id="post-1" class="et_pb_post post-1 post type-post status-publish format-standard hentry category-sin-categoria">
                                     <div class="et_post_meta_wrapper">
                     <h1 class="entry-title">¡Hola, class mundo!</h1>';
 //echo strip_tags($string);
 function currada($string,$reemplazar,$html){
-  
     $html=" ".$html;
     
     if(strpos($html,$string)==false) {
@@ -30,7 +38,7 @@ function currada($string,$reemplazar,$html){
   
                 $etiqueta="";
                 $position="";
-                $atributo="";
+                $dentroValorAtributo="";
                 $comillas=0;
                 //determinamos si es un valor de atributo value="
                 $len=$posicionHTML;
@@ -48,9 +56,9 @@ function currada($string,$reemplazar,$html){
                         if($comillas==1) {
                             if($html[$len-($e+1)]=="="){
                                 for($u=$e+2;$html[$len-$u]!=" ";$u++)
-                                    $atributo.=$html[$len-($u)];
+                                    $dentroValorAtributo.=$html[$len-($u)];
                                 }
-                                $atributo=strrev($atributo);
+                                $dentroValorAtributo=strrev($dentroValorAtributo);
                                
                             }
                           
@@ -64,19 +72,23 @@ function currada($string,$reemplazar,$html){
   
                         $cadeneta=substr($html,0,$len);
                         $cadeneta=substr($cadeneta,-$df);
+                        //Esto puede ser un error para el caso de las estiquetas <ejemplo>
+                        //por si era de tipo <ejemplo>, le ponemos reemplazamos > por blanco 
+                        $cadeneta=str_replace(">"," ",$cadeneta);
                         $cadeneta=explode(" ",$cadeneta);
                         $cadeneta=$cadeneta[0];
                         $etiqueta=$cadeneta;
-                        //echo "position:".$position.",etiqueta:".$cadeneta."<br>";
+                         echo "position:".$position.",etiqueta:".$cadeneta."atributo:".$dentroValorAtributo."<br>";
                         //lets check if ocurrence of the string is inside a word
                         $prevChar=$html[$len];
                         $nextChar=$html[$len+strlen($string)+1];
                         $insideWord=insideWord($prevChar,$nextChar);
-                    
-                        if(($etiqueta!="script")AND($etiqueta!="style") AND ($position=="entre")AND !$insideWord){
+                        $tags=allowedTagsBetween();
+                        
+                        if((strpos($tags,$etiqueta)!=false) AND ($position=="entre")AND !$insideWord){
                             $output=$output.$array[$i].$reemplazar;
                         }
-                        else if(($position="dentro")AND($atributo=="placeholder")){
+                        else if(($position="dentro")AND(($dentroValorAtributo=="placeholder")OR($dentroValorAtributo=="value"))){
                             $output=$output.$array[$i].$reemplazar;
                         }
                         else{
@@ -96,7 +108,7 @@ function currada($string,$reemplazar,$html){
     //echo "<br>".$output;
     return $output;
   }
-echo currada("lo que a mi me de la gana","jili",$html);
+echo currada("mierdón","jili",$html);
 
 function insideWord($prevChar,$nextChar){
 $prev=false;
@@ -168,4 +180,5 @@ function espaciosEnMedio($cadeneta){
 $striped=strip_tags($html);
 //echo $striped;
 */
+
 ?>
