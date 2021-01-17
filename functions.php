@@ -58,6 +58,7 @@ function BRAVOTRAN_buffer_start() { ob_start("BRAVOTRAN_Translate"); }
 function BRAVOTRAN_buffer_end() { if (ob_get_length() > 0) { ob_end_flush(); }}
 
 function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
+  error_log("search pattern:".$searchPattern);
     //if the search pattern does not appear at least once we dont need further analyse and we return the html without replacing
     if(strpos($html,$searchPattern)==false) {
        $output=$html;
@@ -115,9 +116,9 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                     if($char=="<"){
                         if($InsideOrBetweenTag=="") $InsideOrBetweenTag="inside";
                         //from this position we will extract the name of the tag
-                        $df=$e-1;
+                    
                         //we isolate the piece of html from current '<' character to 
-                        $cadeneta=substr($array[$i],-$df);
+                        $cadeneta=substr($array[$i],-$e);
                         //here we see check if there is an hidden atribute
                         if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                         //now the name tag is extracted exploding with blank and getting the first element of array
@@ -134,6 +135,8 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         //we retrive the allowed tags
                         $tags=allowedTagsBetween();
                         
+
+                        //error_log("search pat:".$searchPattern."-tag:".$tag."-position:".$InsideOrBetweenTag."-insideword:".$insideWord."-quotes:".$quotesFound."-atribute:".$atribute);
                         //if the ocurrence of the search pattern is between allowed tags and it is not inside a word, we replace
                         if((strpos($tags,$tag)!=false) AND ($InsideOrBetweenTag=="between")AND !$insideWord){
                             $output=$output.$array[$i].$replace;

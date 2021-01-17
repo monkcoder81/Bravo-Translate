@@ -10,13 +10,13 @@ error_reporting(E_ALL);
 
 $html='<div id="main-content">
 <div class="container">
-<div id="content-area" class="clearfix"> <input type="hidden" value="mierdón" placeholder="lo que a mi me de la gana">
+<div id="content-area" class="clearfix"> <input type="text" value="mierdón" placeholder="lo que a mi me de la gana">
     <div id="left-area">  <br>    esto es una    </br>
                                     <article id="post-1" class="et_pb_post post-1 post type-post status-publish format-standard hentry category-sin-categoria">
                                     <div class="et_post_meta_wrapper">
                     <h1 class="entry-title">¡Hola, class mundo!</h1>';
 
-echo BRAVOTRAN_Analyse_HTML("mierdón","jili",$html);
+echo BRAVOTRAN_Analyse_HTML("lo que a mi","holi holita",$html);
 
 function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
     //if the search pattern does not appear at least once we dont need further analyse and we return the html without replacing
@@ -76,9 +76,9 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                     if($char=="<"){
                         if($InsideOrBetweenTag=="") $InsideOrBetweenTag="inside";
                         //from this position we will extract the name of the tag
-                        $df=$e-1;
+        
                         //we isolate the piece of html from current '<' character to 
-                        $cadeneta=substr($array[$i],-$df);
+                        $cadeneta=substr($array[$i],-$e);
                         //here we see check if there is an hidden atribute
                         if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                         //now the name tag is extracted exploding with blank and getting the first element of array
@@ -94,7 +94,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         $insideWord=insideWord($prevChar,$nextChar);
                         //we retrive the allowed tags
                         $tags=allowedTagsBetween();
-                        
+                        echo "<br>search pat:".$searchPattern."-tag:".$tag."-position:".$InsideOrBetweenTag."-insideword:".$insideWord."-quotes:".$quotesFound."-atribute:".$atribute."<br>";
                         //if the ocurrence of the search pattern is between allowed tags and it is not inside a word, we replace
                         if((strpos($tags,$tag)!=false) AND ($InsideOrBetweenTag=="between")AND !$insideWord){
                             $output=$output.$array[$i].$replace;
