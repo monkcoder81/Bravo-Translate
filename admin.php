@@ -15,6 +15,7 @@ function BRAVOTRAN_add_the_admin(){
 <script src="http://javiapps.com/wp-content/plugins/bravo-translate/js/admin.js"></script>
 
 
+
 <div id="wp-content">
 <input type="hidden" id="BRAVOTRAN_edit_hidden" value="0">
 

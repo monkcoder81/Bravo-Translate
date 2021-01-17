@@ -40,7 +40,7 @@ function BRAVOTRAN_create(WP_REST_Request $request){
     
             $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
             $results=$wpdb->get_results($sql);
-            $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
+            $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
             <p>'.__('1 translation added','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
             <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
             </div>
@@ -70,7 +70,7 @@ if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
     $results=$wpdb->get_results($sql);
     $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
     $results=$wpdb->get_results($sql);
-    $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
+    $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
     <p>'.__('1 translation edited','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
     <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
     </div>
@@ -99,7 +99,7 @@ if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
     $results=$wpdb->get_results($sql);
     $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
     $results=$wpdb->get_results($sql);
-    $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
+    $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
     <p>'.__('1 translation deleted','bravo-translate').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
     <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
     </div>
