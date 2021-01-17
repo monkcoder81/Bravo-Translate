@@ -24,8 +24,12 @@ define('BRAVOTRAN_DIR_URL',plugin_dir_url(__FILE__));
 require_once( plugin_dir_path(__FILE__).'functions.php');
 require_once( plugin_dir_path(__FILE__).'activation.php');
 
+//this modules only loaded if the user is admin
+
+//if (current_user_can('activate_plugins')){
 require_once( plugin_dir_path(__FILE__).'admin.php');
 require_once( plugin_dir_path(__FILE__).'ajax.php');
+//}
 
 //we load translations
 add_action('after_setup_theme', 'bravo_translate_setup');

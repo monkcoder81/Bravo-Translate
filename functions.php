@@ -4,12 +4,18 @@
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
 function BRAVOTRAN_Translate($html) {
-
+  $uriNoParams=$_SERVER['REQUEST_URI'];
+  if(strpos($uriNoParams,"?")!=false) $uriNoParams=explode("?",$_SERVER['REQUEST_URI']);
+  $uriNoParams=$uriNoParams[0];
+  error_log("urinoparams:".$uriNoParams);
   //if we are at BRAVOTAN admin page, we dont want the translation table to be translated
   //i have putted in the admin.php file a marcage that know let me play around with explodes so I can keep this part untranslated
   // I will glue again the skipped table at the end of the function if the $expeptionAdmin value is TRUE
-  if (($_SERVER['REQUEST_URI']=="/wp-admin/admin.php?page=bravo-translate")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/wp/v2/BRAVOTRAN_update")){
-      $exceptionAdmin=true;
+
+  $exceptionAdmin=false;
+  if (($_SERVER['REQUEST_URI']=="/wp-admin/admin.php?page=bravo-translate")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_update")){
+    
+    $exceptionAdmin=true;
       $array_table1=explode('<!--begin of BRAVOTRANtablexss-->',$html);
       $array_table2=explode('<!--end of BRAVOTRANtablexss-->',$array_table1[1]);
       $intact=$array_table2[0];
@@ -24,9 +30,11 @@ function BRAVOTRAN_Translate($html) {
       {
         $array=explode("<body",$html);
         $html=$array[1];
+        
+        //I will glue this later
         $prefix=$array[0]."<body";
       }
-      //this is where the translations are analyzed and their ocurrences are eventually replaced
+      //this is where each translation is analyzed and its ocurrences are eventually replaced
     foreach($results as $clave=>$tr){
    
         $html=BRAVOTRAN_Analyse_HTML($tr->searchFor,$tr->replaceBy,$html);
@@ -38,6 +46,7 @@ function BRAVOTRAN_Translate($html) {
       $array_table2=explode('<!--end of BRAVOTRANtablexss-->',$html);
       $html=$array_table1[0].'<!--begin of BRAVOTRANtablexss-->'.$intact.'<!--end of BRAVOTRANtablexss-->'.$array_table2[1];
     }
+    //I return the processed html preceded by the header
     return $prefix.$html;
 }
 
@@ -56,13 +65,13 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
         else{
           $output="";
   
-        //we are agoing to analyze each piece of html before and after the ocurrence of the search pattern
+        //we are going to analyze each piece of html before and after the ocurrence of the search pattern
         //for this we explode the html with the search pattern and then we will iterate the array
         
         $array=explode($searchPattern,$html);
         
         //we set the position of HTML to analyse to be the last character of the precedent piece of HTML
-        //from this position, we are going to do a reverse reading to find out if the ocurrence is a text to tranlate or not
+        //from this position, we are going to do a reverse reading to find out the context where the ocurrence appears
         $posicionHTML=strlen($array[0])-1;
     
         for($i=0;$i<(count($array)-1);$i++){
@@ -78,6 +87,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                     
                     $char=$html[$len-$e];
   
+
                     //in this case the ocurrence of the string is between an openening and closing tag, or no ending tags like <br> <hr>..
                     //so probably it is a text to translate as long it is between the allowed tags (we will see afterwards)
                     if($char==">") {
@@ -108,7 +118,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         //we isolate the piece of html from current '<' character to 
                         $cadeneta=substr($html,0,$len);
                         $cadeneta=substr($cadeneta,-$df);
-                        //now the name tag is extracted explofing with blank and getting the first element of array
+                        //now the name tag is extracted exploding with blank and getting the first element of array
                         //in case the tag was of type: <example> we substitue > by blank
                         $cadeneta=str_replace(">"," ",$cadeneta);
                         $cadeneta=explode(" ",$cadeneta);
@@ -149,83 +159,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
 
 
 
- function BRAVOTRAN_create(WP_REST_Request $request){
-      $textTo=$request->get_param('textTo');
-      $yourTranslation=$request->get_param('yourTranslation');
-      $sql="INSERT INTO `wp_bravo_translate` (`ID`, `searchFor`, `replaceBy`) VALUES (NULL, '$textTo', '$yourTranslation');";
-
-      global $wpdb;
-      $results=$wpdb->get_results($sql);
-
-      $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
-      $results=$wpdb->get_results($sql);
-      $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
-      <p>'.__('1 translation added','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
-      <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
-      </div>
-      <!--begin of BRAVOTRANtablexss-->
-      <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
-      if($wpdb->num_rows>0){
-      foreach($results as $result){
-        $response.='<tr id="trID"'.$result->ID.'"><td id=forID'.$result->ID.' class="bravoCell">'.$result->searchFor.'</td><td id="toID'.$result->ID.'"'." class='bravoCell'>".$result->replaceBy."</td>
-        <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
-      }
-      }
-      $response.="</table><!--end of BRAVOTRANtablexss-->";
-
-      echo $response;
-}
-
-function BRAVOTRAN_update(WP_REST_Request $request){
-        $textTo=$request->get_param('textTo');
-        $yourTranslation=$request->get_param('yourTranslation');
-        $id=$request->get_param('id');
-        global $wpdb;
-        $sql="UPDATE `wp_bravo_translate` SET `searchFor` = '".$textTo."', `replaceBy` = '".$yourTranslation."' WHERE `wp_bravo_translate`.`ID` = ".$id.";";
-        $results=$wpdb->get_results($sql);
-        $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
-        $results=$wpdb->get_results($sql);
-        $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
-        <p>'.__('1 translation edited','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
-        <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
-        </div>
-        <!--begin of BRAVOTRANtablexss-->
-        <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
-        if($wpdb->num_rows>0){
-        foreach($results as $result){
-          $response.='<tr id="trID"'.$result->ID.'"><td id=forID'.$result->ID.' class="bravoCell">'.$result->searchFor.'</td><td id="toID'.$result->ID.'"'." class='bravoCell'>".$result->replaceBy."</td>
-          <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
-        }
-        }
-        $response.="</table><!--end of BRAVOTRANtablexss-->";
-        
-        echo $response;
-  }
-  
-  function BRAVOTRAN_delete(WP_REST_Request $request){
-        $id=$request->get_param('ID');
-        global $wpdb;
-        $sql="DELETE FROM `wp_bravo_translate` WHERE `wp_bravo_translate`.`ID` = $id";
-        $results=$wpdb->get_results($sql);
-        $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
-        $results=$wpdb->get_results($sql);
-        $response='<div id="message"  style="float:left;width:90%;margin-bottom:10px" class="updated notice is-dismissible">
-        <p>'.__('1 translation deleted','bravo-translate').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
-        <span class="screen-reader-text">'.__('Dismiss.','bravo_translate').'</span></button>
-        </div>
-        <!--begin of BRAVOTRANtablexss-->
-        <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"><tr><td class="bravoCell bravoCellHeader">TEXT TO TRANSLATE</td><td class="bravoCell bravoCellHeader">YOUR TRANSLATION</td> <td style="width:40px"></td></tr>';
-        if($wpdb->num_rows>0){
-        foreach($results as $result){
-          $response.='<tr id="trID"'.$result->ID.'"><td id=forID'.$result->ID.' class="bravoCell">'.$result->searchFor.'</td><td id="toID'.$result->ID.'"'." class='bravoCell'>".$result->replaceBy."</td>
-          <td style='width:40px'><span class='edit BRAVOTRANminiButton'><a onclick='BRAVOTRAN_edit(".$result->ID.")'>Edit</a> <br><span class='trash BRAVOTRANminiButton'><a onclick='BRAVOTRAN_delete(".$result->ID.")'> Delete</a></td></tr>";
-        }
-        }
-        $response.="</table><!--end of BRAVOTRANtablexss-->";
-        
-        echo $response;
-    }
-
+ 
 function insideWord($prevChar,$nextChar){
         $prev=false;
         $next=false;
@@ -241,4 +175,5 @@ function insideWord($prevChar,$nextChar){
       $tags="-a-abbr-address-article-aside-audio-b-blockquote-body-br-button-caption-cite-data-div-dt-dd-em-figcaption-footer-form-h1-h2-h3-h4-h5-h6-hr-html-i-img-input-del-ins-kbd-label-legend-li-main-mark-noscript-option-p-pre-q-s-samp-section-select-small-source-span-strong-sub-summary-sup-table-tbody-td-template-textarea-tfoot-th-time-thead-title-tr-u-ul-video-";    
       return $tags;
 }
+
  ?>
