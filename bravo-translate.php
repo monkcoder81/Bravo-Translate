@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Bravo Translate
-Description: The easiest solution for translate your monolingual website. Works with texts coming form your plugins, themes or database. Your translations will be preserved after any update.
+Description: The simplest solution for translate your monolingual website. Works with texts coming form your plugins, themes or database. Your translations will be preserved after any update.
 Version: 1.0
 Author: guelben
 Author URI: http://www.guelbetech.com
 License: GPL version 2 or later
-Requires at least: 4.4
-Requires PHP: 5.2.4
+Requires at least: 4.4.0
+Requires PHP: 4.0.2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: bravo-translate
 Domain Path: /languages/

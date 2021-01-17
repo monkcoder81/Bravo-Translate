@@ -5,7 +5,7 @@ function BRAVOTRAN_create() {
     textTo=document.getElementById("textToId").value.trim();
     yourT=document.getElementById("YourTrId").value.trim();
     if(textTo.length<2) {
-      alert("<?php _e('The text to be translated must have a minimum length of 2 characters.','bravo-translate')?>");
+      alert(document.getElementById("BRAVOTRAN_min_char_message").value);
       document.getElementById("BRAVOTRANbutton").style.display='inline';
     document.getElementById("BRAVOTRANgif").style.display='none';
       return;
@@ -42,7 +42,7 @@ function BRAVOTRAN_edit(id){
     document.getElementById("BRAVOTRANgif").style.display='inline';
     textTo=document.getElementById("textToId").value.trim();
     if(textTo.length<2) {
-      alert("<?php _e('The text to be translated must have a minimum length of 2 characters.','bravo-translate')?>");
+      alert(document.getElementById("BRAVOTRAN_min_char_message").value);
       document.getElementById("BRAVOTRANbutton_edit").style.display='inline';
     document.getElementById("BRAVOTRANgif").style.display='none';
       return;

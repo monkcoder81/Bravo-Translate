@@ -17,6 +17,7 @@ function BRAVOTRAN_add_the_admin(){
 
 
 <div id="wp-content">
+<input type="hidden" id="BRAVOTRAN_min_char_message" value='<?php _e('The text to be translated must have a minimum length of 2 characters.','bravo-translate')?>'>
 <input type="hidden" id="BRAVOTRAN_edit_hidden" value="0">
 
 <table style="position:relative" class="wp-list-table widefat fixed striped table-view-list pages bravoTable">
@@ -51,10 +52,9 @@ function BRAVOTRAN_add_the_admin(){
     </tr>
    
     <?php
-    global $wp;
-    
-     $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
+     
      global $wpdb;
+     $sql="SELECT * FROM `".$wpdb->base_prefix."bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
      $results=$wpdb->get_results($sql);
      if($wpdb->num_rows>0){
     foreach($results as $result){
@@ -64,7 +64,7 @@ function BRAVOTRAN_add_the_admin(){
     }
 }
 else
-echo'<tr><td class="bravoCell" colspan="2">'.__('No translations so far.','bravo-translate').'></td></tr>';
+echo'<tr><td class="bravoCell" colspan="2">'.__('No translations so far.','bravo-translate').'</td></tr>';
     ?>
     
     </table>

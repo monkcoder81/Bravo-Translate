@@ -76,7 +76,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                 $len=$posicionHTML;
                 $hidden=false;
                 $char="";
-                //we go forward till we find start of a tag
+                //we go forward till we find a tag start
                 for($e=0;$char!="<";$e++){
                     
                     $char=$html[$len-$e];
@@ -167,10 +167,12 @@ function insideWord($prevChar,$nextChar){
         if($prev OR  $next) return true;
         else return false;
  }
-    function allowedTagsBetween(){
+    
+function allowedTagsBetween(){
       $tags="-a-abbr-address-article-aside-audio-b-blockquote-body-br-button-caption-cite-data-div-dt-dd-em-figcaption-footer-form-h1-h2-h3-h4-h5-h6-hr-html-i-img-input-del-ins-kbd-label-legend-li-main-mark-noscript-option-p-pre-q-s-samp-section-select-small-source-span-strong-sub-summary-sup-table-tbody-td-template-textarea-tfoot-th-time-thead-title-tr-u-ul-video-";    
       return $tags;
 }
+
 add_action('wp_loaded', 'BRAVOTRAN_start');
 add_action('shutdown', 'BRAVOTRAN_end');
 
