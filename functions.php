@@ -8,7 +8,7 @@ function BRAVOTRAN_Translate($html) {
   if(strpos($uriNoParams,"?")!=false) $uriNoParams=explode("?",$_SERVER['REQUEST_URI']);
   $uriNoParams=$uriNoParams[0];
   error_log("urinoparams:".$uriNoParams);
-  //if we are at BRAVOTAN admin page, we dont want the translation table to be translated
+  //if we are at BRAVOTAN admin page, we dont want the translation table to be translated 
   //i have putted in the admin.php file a marcage that know let me play around with explodes so I can keep this part untranslated
   // I will glue again the skipped table at the end of the function if the $expeptionAdmin value is TRUE
 
@@ -81,6 +81,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                 $atribute="";
                 $quotesFound=0;
                 $len=$posicionHTML;
+                $hidden=false;
                 $char="";
                 //we go forward till we find start of a tag
                 for($e=0;$char!="<";$e++){
@@ -116,8 +117,9 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         //from this position we will extract the name of the tag
                         $df=$e-1;
                         //we isolate the piece of html from current '<' character to 
-                        $cadeneta=substr($html,0,$len);
-                        $cadeneta=substr($cadeneta,-$df);
+                        $cadeneta=substr($array[$i],-$df);
+                        //here we see check if there is an hidden atribute
+                        if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                         //now the name tag is extracted exploding with blank and getting the first element of array
                         //in case the tag was of type: <example> we substitue > by blank
                         $cadeneta=str_replace(">"," ",$cadeneta);
@@ -137,7 +139,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                             $output=$output.$array[$i].$replace;
                         }
                         //if inside a tag but it is the value of placeholder or value attributes we replace 
-                        else if(($InsideOrBetweenTag="inside")AND(($atribute=="placeholder")OR($atribute=="value"))){
+                        else if(($InsideOrBetweenTag="inside")AND(($atribute=="placeholder")OR($atribute=="value"))AND(!$hidden)){
                             $output=$output.$array[$i].$replace;
                         }
                         // in this case we do not replace
@@ -149,8 +151,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
   
                 }
             
-            $imasuno=$i+1;
-            $posicionHTML=$posicionHTML+strlen($searchPattern)+strlen($array[$imasuno]);
+            $posicionHTML=$posicionHTML+strlen($searchPattern)+strlen($array[$i+1]);
         }
         $output=$output.$array[$i];
     } 
