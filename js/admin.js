@@ -22,7 +22,7 @@ function BRAVOTRAN_create() {
         textToId
     }
   };
-  xhttp.open("GET", "<?php echo home_url() ?>/wp-json/bravotran/BRAVOTRAN_create?textTo="+textTo+"&yourTranslation="+yourT, true);
+  xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_create?textTo="+textTo+"&yourTranslation="+yourT, true);
   xhttp.send();
 }
 
@@ -59,7 +59,7 @@ function BRAVOTRAN_edit(id){
         document.getElementById("YourTrId").value='';
     }
   };
-  xhttp.open("GET", "<?php echo home_url() ?>/wp-json/bravotran/BRAVOTRAN_update?textTo="+textTo+"&yourTranslation="+yourT+"&id="+id, true);
+  xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_update?textTo="+textTo+"&yourTranslation="+yourT+"&id="+id, true);
   xhttp.send();
 }
 function BRAVOTRANdismiss(){
@@ -82,6 +82,6 @@ function BRAVOTRAN_delete(id) {
         document.getElementById("BRAVOTRANgif").style.display='none';
     }
   };
-  xhttp.open("GET", "<?php echo home_url() ?>/wp-json/bravotran/BRAVOTRAN_delete?ID="+id, true);
+  xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_delete?ID="+id, true);
   xhttp.send();
 }
