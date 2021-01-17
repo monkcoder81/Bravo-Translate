@@ -7,9 +7,8 @@ function BRAVOTRAN_Translate($html) {
   $uriNoParams=$_SERVER['REQUEST_URI'];
   if(strpos($uriNoParams,"?")!=false) $uriNoParams=explode("?",$_SERVER['REQUEST_URI']);
   $uriNoParams=$uriNoParams[0];
-  error_log("urinoparams:".$uriNoParams);
   //if we are at BRAVOTAN admin page, we dont want the translation table to be translated 
-  //i have putted in the admin.php file a marcage that know let me play around with explodes so I can keep this part untranslated
+  //i have putted in the admin.php file a marcage that know let me play with explodes so I can keep this part untranslated
   // I will glue again the skipped table at the end of the function if the $expeptionAdmin value is TRUE
 
   $exceptionAdmin=false;
@@ -21,7 +20,7 @@ function BRAVOTRAN_Translate($html) {
       $intact=$array_table2[0];
   }
   //no mystery here, we take the translations from database
-    $sql="SELECT * FROM `wp_bravo_translate`";
+    $sql="SELECT * FROM `wp_bravo_translate`  ORDER BY CHAR_LENGTH(`searchFor`) DESC";
     global $wpdb;
     $results=$wpdb->get_results($sql);
 
@@ -50,15 +49,8 @@ function BRAVOTRAN_Translate($html) {
     return $prefix.$html;
 }
 
-add_action('wp_loaded', 'BRAVOTRAN_buffer_start');
-add_action('shutdown', 'BRAVOTRAN_buffer_end');
-
-function BRAVOTRAN_buffer_start() { ob_start("BRAVOTRAN_Translate"); }
-  
-function BRAVOTRAN_buffer_end() { if (ob_get_length() > 0) { ob_end_flush(); }}
-
 function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
-  error_log("search pattern:".$searchPattern);
+ 
     //if the search pattern does not appear at least once we dont need further analyse and we return the html without replacing
     if(strpos($html,$searchPattern)==false) {
        $output=$html;
@@ -179,5 +171,10 @@ function insideWord($prevChar,$nextChar){
       $tags="-a-abbr-address-article-aside-audio-b-blockquote-body-br-button-caption-cite-data-div-dt-dd-em-figcaption-footer-form-h1-h2-h3-h4-h5-h6-hr-html-i-img-input-del-ins-kbd-label-legend-li-main-mark-noscript-option-p-pre-q-s-samp-section-select-small-source-span-strong-sub-summary-sup-table-tbody-td-template-textarea-tfoot-th-time-thead-title-tr-u-ul-video-";    
       return $tags;
 }
+add_action('wp_loaded', 'BRAVOTRAN_start');
+add_action('shutdown', 'BRAVOTRAN_end');
 
+function BRAVOTRAN_start() { ob_start("BRAVOTRAN_Translate"); }
+  
+function BRAVOTRAN_end() { if (ob_get_length() > 0) { ob_end_flush(); }}
  ?>
