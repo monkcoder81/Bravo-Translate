@@ -31,8 +31,8 @@ function BRAVOTRAN_create(WP_REST_Request $request){
 
     if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
     
-            $textTo=$request->get_param('textTo');
-            $yourTranslation=$request->get_param('yourTranslation');
+            $textTo=sanitize_text_field($request->get_param('textTo'));
+            $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
             $sql="INSERT INTO `wp_bravo_translate` (`ID`, `searchFor`, `replaceBy`) VALUES (NULL, '$textTo', '$yourTranslation');";
     
             global $wpdb;
@@ -62,8 +62,8 @@ function BRAVOTRAN_create(WP_REST_Request $request){
 function BRAVOTRAN_update(WP_REST_Request $request){
 
 if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
-    $textTo=$request->get_param('textTo');
-    $yourTranslation=$request->get_param('yourTranslation');
+    $textTo=sanitize_text_field($request->get_param('textTo'));
+    $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
     $id=$request->get_param('id');
     global $wpdb;
     $sql="UPDATE `wp_bravo_translate` SET `searchFor` = '".$textTo."', `replaceBy` = '".$yourTranslation."' WHERE `wp_bravo_translate`.`ID` = ".$id.";";
