@@ -4,21 +4,15 @@
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
-require_once('../../../wp-load.php');
+//require_once('../../../wp-load.php');
 //echo "peich".current_user_can('activate_plugins');
 
-echo dirname(plugin_basename( __FILE__ ));
-/*
+//echo dirname(plugin_basename( __FILE__ ));
 
-$html='<div id="main-content">
-<div class="container">
-<div id="content-area" class="clearfix"> <input type="text" value="mierdón" placeholder="lo que a mi me de la gana">
-    <div id="left-area">  <br>    esto es una    </br>
-                                    <article id="post-1" class="et_pb_post post-1 post type-post status-publish format-standard hentry category-sin-categoria">
-                                    <div class="et_post_meta_wrapper">
-                    <h1 class="entry-title">¡Hola, class mundo!</h1>';
 
-echo BRAVOTRAN_Analyse_HTML("lo que a mi","holi holita",$html);
+$html='<div class="elementor-text-editor elementor-clearfix"><p>a peich. Te asesoraremos sin ningún compromiso y te diremos, con toda honestidad profesional, qué es lo mejor para tu proyecto.<br>Y, si te convencen las soluciones que te proponemos, <strong>nos ponemos en marcha cuanto antes.</strong> Porque nuestro negocio es hacer que el tuyo crezca.</p><p>¡Que crezca mucho!</p></div>';
+
+echo BRAVOTRAN_Analyse_HTML("Porque nuestro negocio es hacer que el tuyo crezca.","holi holita",$html);
 
 function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
     //if the search pattern does not appear at least once we dont need further analyse and we return the html without replacing
@@ -88,6 +82,13 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         $cadeneta=str_replace(">"," ",$cadeneta);
                         $cadeneta=explode(" ",$cadeneta);
                         $cadeneta=$cadeneta[0];
+                        //in case it was an ending tag </tag> we substitue / by blank
+                       if(strpos(" ".$cadeneta,"/")!=false) {
+                           $cadeneta=str_replace("/"," ",$cadeneta);
+                           $cadeneta=explode(" ",$cadeneta);
+                           $cadeneta=$cadeneta[1];
+                       }
+                        
                         $tag=$cadeneta;
   
                         //lets check if ocurrence of the string is inside a word (in that case we do not replace)

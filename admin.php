@@ -11,8 +11,8 @@ function BRAVOTRAN_add_the_admin(){
 
     function BRAVOTRAN_admin(){
     ?>
-<link rel="stylesheet" href="http://javiapps.com/wp-content/plugins/bravo-translate/css/style.css">
-<script src="http://javiapps.com/wp-content/plugins/bravo-translate/js/admin.js"></script>
+<link rel="stylesheet" href='<?PHP echo BRAVOTRAN_DIR_URL ?>css/style.css'>
+<script src='<?PHP echo BRAVOTRAN_DIR_URL ?>js/admin.js'></script>
 
 
 
