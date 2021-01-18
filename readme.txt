@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.htm
 The simplest solution for translate your monolingual website. Works with texts coming form your plugins, themes or database. Your translations will be preserved after any update.
 
 == Description ==
- This plugin allow you to translate your monolingual website in a super easy manner. You do not have to bother about .pot .po or .mo files. It safe you a lot of time cause you can effectively transalte thouse texts in a foreign language with just a few clicks gaining productivity.  Bravo translate keep your translation in your database. You dont have to worry about themes or plugins updates because your translations will not vannish. 
+ This plugin allow you to translate your monolingual website in a super easy manner. You do not have to bother about .pot .po or .mo files. It safes you a lot of time cause you can effectively transalte thouse texts in a foreign language with just a few clicks gaining productivity.  Bravo translate keeps your translations in your database. You dont have to worry about themes or plugins updates because your translations will not vannish. 
 
 == Installation ==
 1. Install the plugin by downloading it through the plugin section on your site or manually upload it via FTP (put it under wp-content/plugins).
@@ -20,7 +20,7 @@ The simplest solution for translate your monolingual website. Works with texts c
 == Frequently Asked Questions ==
 ==Some texts are not translated how can I fix it?==
 
-If one of your texts is not translated, inspect your source code and check how they are written in your html. Sometimes the text is altered by css uppercasing. Other times some html tags  may be inside your texts. Do not hesitate to copy thouse html tags.
+If some of your texts are not translated, inspect your source code and check how they are written in your html. Sometimes the text is altered by css uppercasing. Other times some html tags  may be inside your texts. Do not hesitate to copy thouse html tags.
 
 For instance lets suppose you have this in your source code :
 
