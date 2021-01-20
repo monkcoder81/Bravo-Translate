@@ -24,12 +24,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             'callback'  => 'BRAVOTRAN_delete',
             'permission_callback' => '__return_true'
         ]);
+        register_rest_route('bravo-translate', '/BRAVOTRAN_dismiss', [
+            'methods'   => WP_REST_Server::READABLE,
+            'callback'  => 'BRAVOTRAN_dismiss',
+            'permission_callback' => '__return_true'
+        ]);
     });
 
 
 function BRAVOTRAN_create(WP_REST_Request $request){
 
-    if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
+    if (!BRAVOTRAN_isAllowedAjaxContext()) return;
     
             $textTo=sanitize_text_field($request->get_param('textTo'));
             $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
@@ -61,7 +66,7 @@ function BRAVOTRAN_create(WP_REST_Request $request){
 
 function BRAVOTRAN_update(WP_REST_Request $request){
 
-if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
+if (!BRAVOTRAN_isAllowedAjaxContext()) return;
     $textTo=sanitize_text_field($request->get_param('textTo'));
     $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
     $id=$request->get_param('id');
@@ -91,7 +96,7 @@ if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
 
 function BRAVOTRAN_delete(WP_REST_Request $request){
 
-if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
+if (!BRAVOTRAN_isAllowedAjaxContext()) return;
 
     $id=$request->get_param('ID');
     global $wpdb;
@@ -116,8 +121,12 @@ if (!BRAVOTRAN_IsAllowedAjaxContext()) return;
     echo $response;
 }
 
+function BRAVOTRAN_dismiss(){
+    update_option( 'BRAVOTRAN_notice', false);
+return true;
+}
         
-function BRAVOTRAN_IsAllowedAjaxContext(){
+function BRAVOTRAN_isAllowedAjaxContext(){
     $user_id = wp_validate_auth_cookie( $_COOKIE[LOGGED_IN_COOKIE], 'logged_in' );
     if(user_can($user_id,'activate_plugins')){
         return true;

@@ -4,10 +4,9 @@
 if ( ! defined( 'ABSPATH' ) ) exit; 
 
 function BRAVOTRAN__deactivation(){
+//we delete option
+delete_option("BRAVOTRAN_notice");
 
-global $wpdb;
-$sql="DROP TABLE `".DB_NAME."`.`".$wpdb->base_prefix."bravo_translate`";
-$wpdb->query($sql);
 }
 
 register_deactivation_hook(BRAVOTRAN_FILE,"BRAVOTRAN__deactivation");

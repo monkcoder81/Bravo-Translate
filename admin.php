@@ -35,13 +35,20 @@ function BRAVOTRAN_add_the_admin(){
 
 </table>
 
-
 <div style="text-align:center;height:80px">
 <button type="button" id="BRAVOTRANbutton" onclick="BRAVOTRAN_create()" class="button button-primary"><?php _e('Add Translation','bravo-translate') ?></button>
 <button type="button" id="BRAVOTRANbutton_edit" style="display:none" onclick="BRAVOTRAN_edit_ajax()" class="button button-primary"><?php _e('Edit Translation','bravo-translate') ?></button>
 <?php echo '<img src="https://media.giphy.com/media/swhRkVYLJDrCE/giphy.gif" id="BRAVOTRANgif" style="display:none;width:80px;">'; ?>
 </div> 
-
+<?php if(get_option('BRAVOTRAN_notice')) echo '
+<div id="messageInfo"  style="width:96%;max-width:800px;margin:10px auto;border-left-color: #007cba;" class="updated notice ">
+    <p>'.__("If your text is not translated, inspect your html code and check how it is actually written.","bravo-translate").'
+    <a style="text-decoration:none;margin-left:90px" href="https://www.guelbetech.com">'.__('Learn more','bravo-translate').'</a>
+    <a style="cursor:pointer;margin-left:20px" onclick="BRAVOTRAN_dismissInfo()">'.__('Do not show again','bravo-translate').'</a>
+    </p>
+   
+    </div>
+'?>;
 <div id="BRAVOTRAN_table_container">
  <!--begin of BRAVOTRANtablexss-->
     <table class="wp-list-table widefat fixed striped table-view-list pages bravoTable"> 

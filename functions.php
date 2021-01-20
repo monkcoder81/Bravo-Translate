@@ -108,8 +108,10 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                       if($InsideOrBetweenTag=="") $InsideOrBetweenTag="inside";
                       //from this position we will extract the name of the tag
       
-                      //we isolate the piece of html from current '<' character to 
-                      $cadeneta=substr($array[$i],-$e);
+                      //we isolate the piece of html from current '<' character to
+                      $cadeneta=substr($html,0,$posicionHTML); 
+                     
+                      $cadeneta=substr($cadeneta,-$e+1);
                       //here we see check if there is an hidden atribute
                       if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                       //now the name tag is extracted exploding with blank and getting the first element of array
@@ -132,7 +134,9 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                       $insideWord=insideWord($prevChar,$nextChar);
                       //we retrive the allowed tags
                       $tags=allowedTagsBetween();
-                      echo "<br>search pat:".$searchPattern."-tag:".$tag."-position:".$InsideOrBetweenTag."-insideword:".$insideWord."-quotes:".$quotesFound."-atribute:".$atribute."<br>";
+
+                      //I keep this line for future debugging 
+                      //echo "<br>search pat:".$searchPattern."-tag:".$tag."-position:".$InsideOrBetweenTag."-insideword:".$insideWord."-quotes:".$quotesFound."-atribute:".$atribute."<br>";
                       //if the ocurrence of the search pattern is between allowed tags and it is not inside a word, we replace
                       if((strpos($tags,$tag)!=false) AND ($InsideOrBetweenTag=="between")AND !$insideWord){
                           $output=$output.$array[$i].$replace;
@@ -156,7 +160,6 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
   } 
   return $output;
 }
-
 
  
 function insideWord($prevChar,$nextChar){

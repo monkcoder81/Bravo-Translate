@@ -19,7 +19,6 @@ function BRAVOTRAN_create() {
         document.getElementById("BRAVOTRANgif").value='';
         document.getElementById("textToId").value='';
         document.getElementById("YourTrId").value='';
-        textToId
     }
   };
   xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_create?textTo="+textTo+"&yourTranslation="+yourT, true);
@@ -84,4 +83,14 @@ function BRAVOTRAN_delete(id) {
   };
   xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_delete?ID="+id, true);
   xhttp.send();
+}
+function BRAVOTRAN_dismissInfo(){
+  var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("messageInfo").style.display="none";
+  }
+};
+xhttp.open("GET", "/wp-json/bravo-translate/BRAVOTRAN_dismiss", true);
+xhttp.send();
 }

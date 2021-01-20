@@ -7,12 +7,15 @@ error_reporting(E_ALL);
 //require_once('../../../wp-load.php');
 //echo "peich".current_user_can('activate_plugins');
 
+
+
 //echo dirname(plugin_basename( __FILE__ ));
 
 
-$html='<div class="elementor-text-editor elementor-clearfix"><p>a peich. Te asesoraremos sin ningún compromiso y te diremos, con toda honestidad profesional, qué es lo mejor para tu proyecto.<br>Y, si te convencen las soluciones que te proponemos, <strong>nos ponemos en marcha cuanto antes.</strong> Porque nuestro negocio es hacer que el tuyo crezca.</p><p>¡Que crezca mucho!</p></div>';
+$html='<h2 class="comments-title">
+1 comment					</h2>';
 
-echo BRAVOTRAN_Analyse_HTML("Porque nuestro negocio es hacer que el tuyo crezca.","holi holita",$html);
+echo BRAVOTRAN_Analyse_HTML("comment","holi holita",$html);
 
 function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
     //if the search pattern does not appear at least once we dont need further analyse and we return the html without replacing
@@ -73,8 +76,10 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                         if($InsideOrBetweenTag=="") $InsideOrBetweenTag="inside";
                         //from this position we will extract the name of the tag
         
-                        //we isolate the piece of html from current '<' character to 
-                        $cadeneta=substr($array[$i],-$e);
+                        //we isolate the piece of html from current '<' character to
+                        $cadeneta=substr($html,0,$posicionHTML); 
+                       
+                        $cadeneta=substr($cadeneta,-$e+1);
                         //here we see check if there is an hidden atribute
                         if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                         //now the name tag is extracted exploding with blank and getting the first element of array
