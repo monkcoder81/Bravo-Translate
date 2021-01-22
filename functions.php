@@ -108,22 +108,20 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                       if($InsideOrBetweenTag=="") $InsideOrBetweenTag="inside";
                       //from this position we will extract the name of the tag
       
-                      //we isolate the piece of html from current '<' character to
+                      //we isolate the piece of html from current '<' character to positionHTML(cursor)
                       $cadeneta=substr($html,0,$posicionHTML); 
                      
                       $cadeneta=substr($cadeneta,-$e+1);
-                      //here we see check if there is an hidden atribute
+                      //here we check if there is an hidden atribute
                       if(strpos($cadeneta,'"hidden"')!=false) $hidden=true;
                       //now the name tag is extracted exploding with blank and getting the first element of array
                       //in case the tag was of type: <example> we substitue > by blank
                       $cadeneta=str_replace(">"," ",$cadeneta);
                       $cadeneta=explode(" ",$cadeneta);
                       $cadeneta=$cadeneta[0];
-                      //in case it was an ending tag </tag> we substitue / by blank
+                      //in case it was an ending tag </tag> we eliminate / 
                      if(strpos(" ".$cadeneta,"/")!=false) {
-                         $cadeneta=str_replace("/"," ",$cadeneta);
-                         $cadeneta=explode(" ",$cadeneta);
-                         $cadeneta=$cadeneta[1];
+                         $cadeneta=str_replace("/","",$cadeneta);
                      }
                       
                       $tag=$cadeneta;
@@ -145,7 +143,11 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                       else if(($InsideOrBetweenTag="inside")AND(($atribute=="placeholder")OR($atribute=="value"))AND(!$hidden)){
                           $output=$output.$array[$i].$replace;
                       }
-                      // in this case we do not replace
+                      //if inside a tag but it is the alt attribute of img we replace 
+                      else if(($InsideOrBetweenTag="inside")AND ($tag=="img") AND($atribute=="alt")){
+                        $output=$output.$array[$i].$replace;
+                        }
+                      // otherwise we do not replace
                       else{
                           $output=$output.$array[$i].$searchPattern;
                       }
