@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Bravo Translate
-Description: The simplest solution for translate your monolingual website. Works with texts coming form your plugins, themes or database. Your translations will be preserved after any update.
+Description: The simplest solution for translate foreign texts or replace phrases you don't like. Works with texts coming from your plugins, themes, database or wordpress core. Your translations will be preserved after any update. Suitable for monolingual websites.
 Version: 1.0
 Author: guelben
 Author URI: http://www.guelbetech.com
@@ -26,7 +26,7 @@ require_once( plugin_dir_path(__FILE__).'activation.php');
 require_once( plugin_dir_path(__FILE__).'deactivation.php');
 require_once( plugin_dir_path(__FILE__).'admin.php');
 require_once( plugin_dir_path(__FILE__).'ajax.php');
-require_once( plugin_dir_path(__FILE__).'uninstall.php');
+require_once( plugin_dir_path(__FILE__).'delete.php');
 
 //we load translations
 add_action('after_setup_theme', 'bravo_translate_setup');

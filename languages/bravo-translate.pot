@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bravo Translate\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-16 02:39+0000\n"
+"POT-Creation-Date: 2021-01-22 06:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Loco-Version: 2.5.0; wp-5.6\n"
 "X-Domain: bravo-translate"
 
-#: functions.php:258
+#: ajax.php:108
 msgid "1 translation deleted"
 msgstr ""
 
-#: admin.php:141
+#: admin.php:39
 msgid "Add Translation"
 msgstr ""
 
@@ -28,15 +28,19 @@ msgstr ""
 msgid "Bravo Translate"
 msgstr ""
 
-#: admin.php:165
+#: admin.php:70
 msgid "Delete"
 msgstr ""
 
-#: admin.php:165
+#: admin.php:47
+msgid "Do not show again"
+msgstr ""
+
+#: admin.php:70
 msgid "Edit"
 msgstr ""
 
-#: admin.php:142
+#: admin.php:40
 msgid "Edit Translation"
 msgstr ""
 
@@ -48,25 +52,35 @@ msgstr ""
 msgid "http://www.guelbetech.com"
 msgstr ""
 
-#: admin.php:169
+#: admin.php:45
+msgid ""
+"If your text is not translated, inspect your html code and check how it is "
+"actually written."
+msgstr ""
+
+#: admin.php:46
+msgid "Learn more"
+msgstr ""
+
+#: admin.php:74
 msgid "No translations so far."
 msgstr ""
 
-#: admin.php:126 admin.php:150
+#: admin.php:25 admin.php:56
 msgid "Text to translate"
 msgstr ""
 
 #. Description of the plugin
 msgid ""
-"The easiest solution for translate your monolingual website. Works with "
+"The simplest solution for translate your monolingual website. Works with "
 "texts coming form your plugins, themes or database. Your translations will "
 "be preserved after any update."
 msgstr ""
 
-#: admin.php:39 admin.php:76
+#: admin.php:20
 msgid "The text to be translated must have a minimum length of 2 characters."
 msgstr ""
 
-#: admin.php:127 admin.php:151
+#: admin.php:26 admin.php:57
 msgid "Your translation"
 msgstr ""

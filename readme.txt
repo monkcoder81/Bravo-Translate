@@ -7,7 +7,7 @@ Requires PHP: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.htm
 
-The simplest solution for translate your monolingual website. Works with texts coming form your plugins, themes or database. Your translations will be preserved after any update.
+The simplest solution for translate foreign texts or replace phrases you don't like. Works with texts coming form your plugins, themes, database or wordpress core. Your translations will be preserved after any update.
 
 == Description ==
  This plugin allow you to translate your monolingual website in a super easy manner. You do not have to bother about .pot .po or .mo files. It safes you a lot of time cause you can effectively transalte thouse texts in a foreign language with just a few clicks gaining productivity.  Bravo translate keeps your translations in your database. You dont have to worry about themes or plugins updates because your translations will not vannish. 

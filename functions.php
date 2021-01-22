@@ -119,7 +119,7 @@ function BRAVOTRAN_Analyse_HTML($searchPattern,$replace,$html){
                       $cadeneta=str_replace(">"," ",$cadeneta);
                       $cadeneta=explode(" ",$cadeneta);
                       $cadeneta=$cadeneta[0];
-                      //in case it was an ending tag </tag> we eliminate / 
+                      //in case it was an ending tag </tag> we eliminate /  
                      if(strpos(" ".$cadeneta,"/")!=false) {
                          $cadeneta=str_replace("/","",$cadeneta);
                      }
