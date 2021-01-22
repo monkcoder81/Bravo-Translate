@@ -43,7 +43,7 @@ function BRAVOTRAN_add_the_admin(){
 <?php if(get_option('BRAVOTRAN_notice')) echo '
 <div id="messageInfo"  style="width:96%;max-width:800px;margin:10px auto;border-left-color: #007cba;" class="updated notice ">
     <p>'.__("If your text is not translated, inspect your html code and check how it is actually written.","bravo-translate").'
-    <a style="text-decoration:none;margin-left:90px" href="https://www.guelbetech.com">'.__('Learn more','bravo-translate').'</a>
+    <a style="text-decoration:none;margin-left:90px" href="https://www.guelbetech.com/why-some-of-my-texts-are-not-being-translated/">'.__('Learn more','bravo-translate').'</a>
     <a style="cursor:pointer;margin-left:20px" onclick="BRAVOTRAN_dismissInfo()">'.__('Do not show again','bravo-translate').'</a>
     </p>
    
