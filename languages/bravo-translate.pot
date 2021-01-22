@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bravo Translate\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-22 07:01+0000\n"
+"POT-Creation-Date: 2021-01-22 07:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -54,8 +54,8 @@ msgstr ""
 
 #: admin.php:45
 msgid ""
-"If your text is not translated, inspect your html code and check how it is "
-"actually written."
+"If your text is not being translated, inspect your html code and check how "
+"it is actually written."
 msgstr ""
 
 #: admin.php:46

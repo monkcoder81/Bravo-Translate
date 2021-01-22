@@ -35,15 +35,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function BRAVOTRAN_create(WP_REST_Request $request){
 
     if (!BRAVOTRAN_isAllowedAjaxContext()) return;
-    
+            global $wpdb;
             $textTo=sanitize_text_field($request->get_param('textTo'));
             $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
-            $sql="INSERT INTO `wp_bravo_translate` (`ID`, `searchFor`, `replaceBy`) VALUES (NULL, '$textTo', '$yourTranslation');";
-    
-            global $wpdb;
+            $sql="INSERT INTO `".$wpdb->base_prefix."bravo_translate` (`ID`, `searchFor`, `replaceBy`) VALUES (NULL, '$textTo', '$yourTranslation');";
             $results=$wpdb->get_results($sql);
-    
-            $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
+            $sql="SELECT * FROM `".$wpdb->base_prefix."bravo_translate` ORDER BY `".$wpdb->base_prefix."bravo_translate`.`ID` DESC";
             $results=$wpdb->get_results($sql);
             $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
             <p>'.__('1 translation added','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
@@ -71,9 +68,9 @@ if (!BRAVOTRAN_isAllowedAjaxContext()) return;
     $yourTranslation=sanitize_text_field($request->get_param('yourTranslation'));
     $id=$request->get_param('id');
     global $wpdb;
-    $sql="UPDATE `wp_bravo_translate` SET `searchFor` = '".$textTo."', `replaceBy` = '".$yourTranslation."' WHERE `wp_bravo_translate`.`ID` = ".$id.";";
+    $sql="UPDATE `".$wpdb->base_prefix."bravo_translate` SET `searchFor` = '".$textTo."', `replaceBy` = '".$yourTranslation."' WHERE `".$wpdb->base_prefix."bravo_translate`.`ID` = ".$id.";";
     $results=$wpdb->get_results($sql);
-    $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
+    $sql="SELECT * FROM `".$wpdb->base_prefix."bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
     $results=$wpdb->get_results($sql);
     $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
     <p>'.__('1 translation edited','bravo-transalte').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
@@ -100,9 +97,9 @@ if (!BRAVOTRAN_isAllowedAjaxContext()) return;
 
     $id=$request->get_param('ID');
     global $wpdb;
-    $sql="DELETE FROM `wp_bravo_translate` WHERE `wp_bravo_translate`.`ID` = $id";
+    $sql="DELETE FROM `".$wpdb->base_prefix."bravo_translate` WHERE `".$wpdb->base_prefix."bravo_translate`.`ID` = $id";
     $results=$wpdb->get_results($sql);
-    $sql="SELECT * FROM `wp_bravo_translate` ORDER BY `wp_bravo_translate`.`ID` DESC";
+    $sql="SELECT * FROM `".$wpdb->base_prefix."bravo_translate` ORDER BY `".$wpdb->base_prefix."bravo_translate`.`ID` DESC";
     $results=$wpdb->get_results($sql);
     $response='<div id="message"  style="width:96%;max-width:800px;margin:10px auto" class="updated notice is-dismissible">
     <p>'.__('1 translation deleted','bravo-translate').'</p><button type="button" onclick="BRAVOTRANdismiss()" class="notice-dismiss">
