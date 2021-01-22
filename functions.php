@@ -12,7 +12,7 @@ function BRAVOTRAN_Translate($html) {
   // I will glue again the skipped table at the end of the function if the $expeptionAdmin value is TRUE
 
   $exceptionAdmin=false;
-  if (($_SERVER['REQUEST_URI']=="/wp-admin/admin.php?page=bravo-translate")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_update")){
+  if ((" ".strpos($_SERVER['REQUEST_URI'],"/wp-admin/admin.php?page=bravo-translate")!=null)OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_delete")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_create")OR($uriNoParams=="/wp-json/bravo-translate/BRAVOTRAN_update")){
     
     $exceptionAdmin=true;
       $array_table1=explode('<!--begin of BRAVOTRANtablexss-->',$html);

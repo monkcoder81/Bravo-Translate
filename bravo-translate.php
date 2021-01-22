@@ -30,7 +30,9 @@ require_once( plugin_dir_path(__FILE__).'uninstall.php');
 
 //we load translations
 add_action('after_setup_theme', 'bravo_translate_setup');
+$Arbol="abeto";
 function bravo_translate_setup(){
+    
 load_plugin_textdomain('bravo-translate', false, dirname(plugin_basename( __FILE__ )) . '/languages/' );
 }
 ?>
